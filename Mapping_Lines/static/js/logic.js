@@ -9,6 +9,11 @@ let line = [
   [37.6213, -122.3790]
 ];
 
+// Create a polyline using the line coordinates and make the line red.
+L.polyline(line, {
+  color: "red"
+}).addTo(map);
+
 // Get data from cities.js
 let cityData = cities;
 
