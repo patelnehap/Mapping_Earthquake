@@ -18,21 +18,21 @@ let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/sate
   // Create a base layer that holds both maps.
 let baseMaps = {
   Streets: streets,
-  SatelliteStreets: satelliteStreets
+  Satellite: satelliteStreets
 };
 
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
-  center: [43.7, -79.3],
-  zoom: 11,
-  layers: [satelliteStreets]
+  center: [39.5, -98.5],
+  zoom: 3,
+  layers: [streets]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
 // Accessing the Toronto neighborhoods GeoJSON URL.
-let torontoHoods = "https://raw.githubusercontent.com/patelnehap/Mapping_Earthquake/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json";
+//let earthquake = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Create a style for the lines.
 let myStyle = {
@@ -41,14 +41,8 @@ let myStyle = {
 }
 
 // Grabbing our GeoJSON data.
-d3.json(torontoHoods).then(function(data) {
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
   console.log(data);
 // Creating a GeoJSON layer with the retrieved data.
-L.geoJSON(data, {
-  // We turn each feature into a marker on the map.
-style: myStyle,
-  onEachFeature: function(feature, layer) {
-    layer.bindPopup("<h3> NeighborHood: " + feature.properties.AREA_NAME + "</h3>");
-   }
-}).addTo(map);
+L.geoJSON(data).addTo(map);
 });
